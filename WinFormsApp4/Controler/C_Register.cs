@@ -10,7 +10,7 @@ namespace WinFormsApp4.Controler
 {
     public class C_Register
     {
-        private readonly string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=1234;Database=well";
+        private readonly string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=Gun180106;Database=data";
 
         public bool UsernameExists(string username)
         {

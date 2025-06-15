@@ -135,6 +135,7 @@ namespace fitur_gejalaumum.view
         private void button2_Click(object sender, EventArgs e)
         {
             Form2 home = new Form2(this.username);
+            this.Hide();
             home.ShowDialog();
             this.Close();
         }

@@ -10,7 +10,7 @@ namespace ibu_hamilll.controller
 { 
     public class C_Lanjutan
     {
-        private readonly string _connStr = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=Gun180106";
+        private readonly string _connStr = "Host=localhost;Username=postgres;Database=data;port=5432;Password=Gun180106";
 
         public bool UpdateKeluhanLanjutan(MO_Lanjutan data)
         {

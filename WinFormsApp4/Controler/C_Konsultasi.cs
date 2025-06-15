@@ -13,7 +13,7 @@ namespace WinFormsApp4.Controler
     public class C_Konsultasi
     {
        
-            private readonly string connectionString = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=1234";
+            private readonly string connectionString = "Host=localhost;Username=postgres;Database=data ;port=5432;Password=Gun180106";
 
             public bool ProsesKonsultasi(string nama, string umurText, string alergi, string kategori, string gejala,
                                          out string pesan, out M_Konsultasi model, out M_Obat hasilObat)
@@ -50,7 +50,7 @@ namespace WinFormsApp4.Controler
                     using (var conn = new NpgsqlConnection(connectionString))
                     {
                         conn.Open();
-                        string insertQuery = "INSERT INTO akun(nama, umur, gejala, alergi, kategori) VALUES(@nama, @umur, @gejala, @alergi, @kategori)";
+                        string insertQuery = "INSERT INTO gejala (nama, umur, gejala, alergi, kategori) VALUES(@nama, @umur, @gejala, @alergi, @kategori)";
                         using (var cmd = new NpgsqlCommand(insertQuery, conn))
                         {
                             cmd.Parameters.AddWithValue("@nama", nama);

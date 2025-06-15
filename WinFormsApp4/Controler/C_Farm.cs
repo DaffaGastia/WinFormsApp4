@@ -13,7 +13,7 @@ namespace WinFormsApp4.Controler
 {
     public class C_Farm011
     {
-        private readonly string connectionString = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=Gun180106";
+        private readonly string connectionString = "Host=localhost;Username=postgres;Database=data;port=5432;Password=Gun180106";
         public M_Obat CariObat(M_Konsultasi konsultasi)
         {
             M_Obat hasil = null;
@@ -90,7 +90,7 @@ namespace WinFormsApp4.Controler
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM akun ORDER BY no_antrian DESC LIMIT 1", conn))
+                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM gejala ORDER BY no_antrian DESC LIMIT 1", conn))
                 {
                     NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
                     adapter.Fill(dt);
@@ -104,13 +104,13 @@ namespace WinFormsApp4.Controler
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                using (var cekCmd = new NpgsqlCommand("SELECT COUNT(*) FROM akun WHERE no_antrian = @id", conn))
+                using (var cekCmd = new NpgsqlCommand("SELECT COUNT(*) FROM gejala WHERE no_antrian = @id", conn))
                 {
                     cekCmd.Parameters.AddWithValue("id", data.Id);
                     int count = Convert.ToInt32(cekCmd.ExecuteScalar());
                     if (count == 0) return false;
                 }
-                using (var updateCmd = new NpgsqlCommand("UPDATE akun SET gejala_lanjutan = @gejala WHERE no_antrian = @id", conn))
+                using (var updateCmd = new NpgsqlCommand("UPDATE gejala SET gejala_lanjutan = @gejala WHERE no_antrian = @id", conn))
                 {
                     updateCmd.Parameters.AddWithValue("gejala", data.GejalaLanjutan);
                     updateCmd.Parameters.AddWithValue("id", data.Id);
@@ -126,7 +126,7 @@ namespace WinFormsApp4.Controler
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM akun ORDER BY no_antrian DESC LIMIT 1", conn))
+                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM gejala ORDER BY no_antrian DESC LIMIT 1", conn))
                 {
                     NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
                     adapter.Fill(dt);
@@ -151,7 +151,7 @@ namespace WinFormsApp4.Controler
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM akun WHERE no_antrian = @id", conn))
+                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM gejala WHERE no_antrian = @id", conn))
                 {
                     cmd.Parameters.AddWithValue("id", id);
                     using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd))
@@ -170,7 +170,7 @@ namespace WinFormsApp4.Controler
             {
                 conn.Open();
                 string query = @"SELECT umur, kategori, alergi, gejala, gejala_lanjutan
-                         FROM akun
+                         FROM gejala
                          WHERE no_antrian = @id";
 
                 using (var cmd = new NpgsqlCommand(query, conn))
@@ -196,28 +196,6 @@ namespace WinFormsApp4.Controler
 
             return null;
         }
-
-        //public bool UpdateGejalaLanjutan(M_Lanjutan data)
-        //{
-        //    using (var conn = new NpgsqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-
-        //        using (var cekCmd = new NpgsqlCommand("SELECT COUNT(*) FROM akun WHERE no_antrian = @id", conn))
-        //        {
-        //            cekCmd.Parameters.AddWithValue("id", data.Id);
-        //            if (Convert.ToInt32(cekCmd.ExecuteScalar()) == 0)
-        //                return false;
-        //        }
-
-        //        using (var updateCmd = new NpgsqlCommand("UPDATE akun SET gejala_lanjutan = @gejala WHERE no_antrian = @id", conn))
-        //        {
-        //            updateCmd.Parameters.AddWithValue("gejala", data.GejalaLanjutan);
-        //            updateCmd.Parameters.AddWithValue("id", data.Id);
-        //            return updateCmd.ExecuteNonQuery() > 0;
-        //        }
-        //    }
-        //}
     }
     
 }

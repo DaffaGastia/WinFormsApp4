@@ -10,7 +10,7 @@ namespace ibu_hamilll.controller
 {
     class CO_Konsultasi
     {
-        private readonly string _connStr = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=Gun180106";
+        private readonly string _connStr = "Host=localhost;Username=postgres;Database=data;port=5432;Password=Gun180106";
 
         public bool ProsesKonsultasiKeluhan(string nama, int umur, DateTime tanggalKehamilanAwal, string keluhan,
                                             out string pesan, out MO_Konsultasi model)
