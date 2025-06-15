@@ -12,6 +12,8 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
+using WinFormsApp4.Model;
+using WinFormsApp4.Controler;
 
 namespace WinFormsApp4
 {
@@ -19,8 +21,8 @@ namespace WinFormsApp4
     {
         [DllImport("Gdi32.dll", EntryPoint = "CreateRoundRectRgn")]
         private static extern IntPtr CreateRoundRectRgn(
-    int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
-    int nWidthEllipse, int nHeightEllipse);
+        int nLeftRect, int nTopRect, int nRightRect, int nBottomRect,
+        int nWidthEllipse, int nHeightEllipse);
 
         private bool dragging = false;
         private Point dragCursorPoint;
@@ -47,55 +49,28 @@ namespace WinFormsApp4
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string username = textBox1.Text.Trim();
-            string password = textBox3.Text.Trim();
+           string username = textBox3.Text.Trim();
+           string password = textBox1.Text.Trim();
 
-            if (textBox1.Text != "" && textBox3.Text != "")
+            if (username == "" || password == "")
             {
+                MessageBox.Show("Username dan Password tidak boleh kosong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
-                using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=1234;Database=well"))
-                {
-                    conn.Open();
-                    string query = "SELECT user_id, username FROM users WHERE username = @username";
-                    using (var cmd = new NpgsqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@username", textBox1.Text);
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                User.Id = reader.GetInt32(0);
-                                User.Username = reader.GetString(1);  
-                            }
-                        }
-                    }
-                }
-
-                if (authLogin(textBox1.Text, textBox3.Text))
-                    MessageBox.Show("Login berhasil", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Form2 form2 = new Form2(textBox3.Text);
+            C_User controller = new C_User();
+            if (controller.AuthLogin(username, password))
+            {
+                MessageBox.Show("Login berhasil", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var form2 = new Dashboard(username); // atau bisa pakai controller.LoggedInUser.Username
                 this.Hide();
                 form2.ShowDialog();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Username dan Password tidak boleh kosong", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Login gagal. Username atau password salah.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private bool authLogin(string username, string password)
-        {
-            NpgsqlConnection conn = new NpgsqlConnection("Host=localhost;Username=postgres;Password=1234;Database=well;port = 5432");
-            conn.Open();
-            NpgsqlCommand npgsqlCommand = new NpgsqlCommand();
-            npgsqlCommand.Connection = conn;
-            npgsqlCommand.CommandText = $"SELECT * from users where username = '{username}' AND password = '{password}' ";
-            NpgsqlDataReader data = npgsqlCommand.ExecuteReader();
-            bool result = data.Read();
-            conn.Close();
-            return result;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

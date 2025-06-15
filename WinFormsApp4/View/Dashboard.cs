@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using WinFormsApp4.Model;
 
 namespace WinFormsApp4
 {

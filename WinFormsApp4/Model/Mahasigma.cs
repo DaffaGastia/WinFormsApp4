@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using CIHUYYY;
 
-namespace masuk
+namespace WinFormsApp4.Model
 {
     internal class Database 
     {

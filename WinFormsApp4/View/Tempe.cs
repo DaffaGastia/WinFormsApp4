@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using fitur_gejalaumum;
+using WinFormsApp4.Model;
+using fitur_gejalaumum.View;
+using fitur_gejalaumum.view;
 //using CIHUYYY;
 
 namespace WinFormsApp4
@@ -18,7 +21,7 @@ namespace WinFormsApp4
     {
         string username;
 
-        masuk.Database Mahasigma = new masuk.Database();
+        Database Mahasigma = new Database();
         public Form2(string username)
         {
             InitializeComponent();

@@ -2,7 +2,7 @@
 using System;
 using System.Windows.Forms;
 
-namespace WinFormsApp4
+namespace WinFormsApp4.Controler
 {
     public class UserRepository
     {

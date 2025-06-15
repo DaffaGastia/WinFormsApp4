@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WinFormsApp4
+namespace WinFormsApp4.Model
 {
     internal class Tentang
     {
