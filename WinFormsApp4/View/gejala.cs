@@ -1,6 +1,4 @@
 ﻿using fitur_gejalaumum;
-using fitur_gejalaumum.Controler;
-using fitur_gejalaumum.Model;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -12,19 +10,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using fitur_gejalaumum.Controler;
-using fitur_gejalaumum.Model;
+using WinFormsApp4.Controler;
+using WinFormsApp4.Model;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using fitur_gejalaumum.View;
+using WinFormsApp4;
 
 namespace fitur_gejalaumum.view
 {
     public partial class gejala : Form
     {
-        public gejala()
+        private string username;
+        public gejala(string username)
         {
             InitializeComponent();
+            this.username = username;
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -96,7 +97,7 @@ namespace fitur_gejalaumum.view
                     MessageBox.Show(pesan, "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Panggil farm11 dengan data konsultasi dan hasil obat (boleh null)
-                    farm11 farm = new farm11(model, obat);
+                    farm11 farm = new farm11(this.username,model, obat);
                     this.Hide();
                     farm.ShowDialog();
                     this.Close();
@@ -133,7 +134,9 @@ namespace fitur_gejalaumum.view
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            Form2 home = new Form2(this.username);
+            home.ShowDialog();
+            this.Close();
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)

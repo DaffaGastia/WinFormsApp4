@@ -10,11 +10,11 @@ namespace WinFormsApp4.Controler
 {
     public class C_Register
     {
-        private readonly string _connString = "Host=localhost;Port=5432;Username=postgres;Password=1234;Database=well";
+        private readonly string connectionString = "Host=localhost;Port=5432;Username=postgres;Password=1234;Database=well";
 
         public bool UsernameExists(string username)
         {
-            using (var conn = new NpgsqlConnection(_connString))
+            using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
                 string query = "SELECT COUNT(*) FROM users WHERE username = @username";
@@ -29,7 +29,7 @@ namespace WinFormsApp4.Controler
 
         public bool RegisterUser(M_Register user)
         {
-            using (var conn = new NpgsqlConnection(_connString))
+            using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
                 string query = "INSERT INTO users (email, username, password) VALUES (@e, @u, @p)";

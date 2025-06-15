@@ -13,6 +13,7 @@ using fitur_gejalaumum;
 using WinFormsApp4.Model;
 using fitur_gejalaumum.View;
 using fitur_gejalaumum.view;
+using ibu_hamilll.view;
 //using CIHUYYY;
 
 namespace WinFormsApp4
@@ -66,7 +67,7 @@ namespace WinFormsApp4
 
         private void button2_Click(object sender, EventArgs e)
         {
-            gejala gj = new gejala();
+            gejala gj = new gejala(this.username);
             this.Hide();
             gj.ShowDialog();
             this.Close();
@@ -99,7 +100,10 @@ namespace WinFormsApp4
 
         private void button3_Click(object sender, EventArgs e)
         {
-
+            Ibu_Hamil_utama ib = new Ibu_Hamil_utama();
+            this.Hide();
+            ib.ShowDialog();
+            this.Close();
         }
 
         private void panel3_Paint(object sender, PaintEventArgs e)

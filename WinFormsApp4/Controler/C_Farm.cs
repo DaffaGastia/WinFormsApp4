@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using fitur_gejalaumum.Model;
+using WinFormsApp4.Model;
 using fitur_gejalaumum.view;
 using Npgsql;
 
-namespace fitur_gejalaumum.Controler
+namespace WinFormsApp4.Controler
 {
     public class C_Farm011
     {
-        private readonly string connectionString = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=1234";
+        private readonly string connectionString = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=Gun180106";
         public M_Obat CariObat(M_Konsultasi konsultasi)
         {
             M_Obat hasil = null;

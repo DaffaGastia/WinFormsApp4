@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace fitur_gejalaumum.Model
+namespace WinFormsApp4.Model
 {
     public class M_Lanjutan : M_Konsultasi
     {

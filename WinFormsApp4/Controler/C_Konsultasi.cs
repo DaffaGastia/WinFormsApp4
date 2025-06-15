@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Npgsql;
-using fitur_gejalaumum.Model;
+using WinFormsApp4.Model;
 using System.Windows.Forms;
 using fitur_gejalaumum.view;
 
-namespace fitur_gejalaumum.Controler
+namespace WinFormsApp4.Controler
 {
     public class C_Konsultasi
     {
        
-            private readonly string connStr = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=1234";
+            private readonly string connectionString = "Host=localhost;Username=postgres;Database=coba coba;port=5432;Password=1234";
 
             public bool ProsesKonsultasi(string nama, string umurText, string alergi, string kategori, string gejala,
                                          out string pesan, out M_Konsultasi model, out M_Obat hasilObat)
@@ -47,7 +47,7 @@ namespace fitur_gejalaumum.Controler
 
                 try
                 {
-                    using (var conn = new NpgsqlConnection(connStr))
+                    using (var conn = new NpgsqlConnection(connectionString))
                     {
                         conn.Open();
                         string insertQuery = "INSERT INTO akun(nama, umur, gejala, alergi, kategori) VALUES(@nama, @umur, @gejala, @alergi, @kategori)";
@@ -89,7 +89,7 @@ namespace fitur_gejalaumum.Controler
 
                 try
                 {
-                    using (var conn = new NpgsqlConnection(connStr))
+                    using (var conn = new NpgsqlConnection(connectionString))
                     {
                         conn.Open();
                         string query = @"

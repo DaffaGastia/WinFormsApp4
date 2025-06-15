@@ -1,4 +1,5 @@
-﻿using System;
+﻿using fitur_gejalaumum.view;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,8 +9,8 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using fitur_gejalaumum.Controler;
-using fitur_gejalaumum.Model;
+using WinFormsApp4.Controler;
+using WinFormsApp4.Model;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace fitur_gejalaumum.View
@@ -19,15 +20,17 @@ namespace fitur_gejalaumum.View
         private readonly C_Farm011 controller = new C_Farm011();
         private readonly M_Konsultasi Konsultasi;
         private readonly M_Obat Obat;
+        private string username;
 
-        public farm11(M_Konsultasi konsultasi, M_Obat obat)
+        public farm11(string username, M_Konsultasi konsultasi, M_Obat obat)
+
         {
             InitializeComponent();
-            Konsultasi = konsultasi;
-            Obat = obat;
-
             TampilkanDataPasienTerakhir();
             TampilkanHasilObat();
+            Konsultasi = konsultasi;
+            Obat = obat;
+            this.username = username;
         }
 
         private void TampilkanDataPasienTerakhir()
@@ -40,7 +43,7 @@ namespace fitur_gejalaumum.View
                 dataGridView1.DataSource = table;
                 dataGridView1.RowHeadersVisible = false;
                 dataGridView1.AllowUserToAddRows = false;
-                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill; 
+                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 dataGridView1.AllowUserToResizeColumns = false;
                 dataGridView1.AllowUserToResizeRows = false;
                 dataGridView1.BorderStyle = BorderStyle.None;
@@ -55,7 +58,7 @@ namespace fitur_gejalaumum.View
         }
         private void TampilkanHasilObat()
         {
-           
+
             if (Obat != null)
             {
                 label1.Text = Obat.ObatKimia;
@@ -154,6 +157,14 @@ namespace fitur_gejalaumum.View
         private void panel4_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            gejala gj = new gejala(this.username);
+            this.Hide();
+            gj.ShowDialog();
+            this.Close();
         }
     }
 }
