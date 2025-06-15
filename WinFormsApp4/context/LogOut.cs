@@ -6,21 +6,6 @@ namespace WinFormsApp4
 {
     internal class LogOut
     {
-        //public static void ShowLogoutMessage(string username)
-        //{
-        //    DialogResult result = MessageBox.Show(
-        //        $"Terima kasih, {username}.\nSemoga lekas pulih! 😊",
-        //        "Konfirmasi Logout",
-        //        MessageBoxButtons.OKCancel,
-        //        MessageBoxIcon.Information
-        //    );
-
-        //    if (result == DialogResult.OK)
-        //    {
-        //        Application.Exit(); 
-        //    }
-        //}
-
         public static void ShowLogoutMessageAndReturnToLogin(Form currentForm, string username)
         {
             DialogResult result = MessageBox.Show(

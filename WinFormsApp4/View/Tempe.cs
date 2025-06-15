@@ -35,9 +35,7 @@ namespace WinFormsApp4
             label1.Text = $"Selamat Datang {this.username}";
 
             label2.Text = Mahasigma.daftarMahasiswa[0].nama;
-            //label3.Text = Mahasigma.daftarMahasiswa[0].nim;
             label4.Text = Mahasigma.daftarMahasiswa[1].nama;
-            //label5.Text = Mahasigma.daftarMahasiswa[1].nim;
         }
 
         private void label1_Click(object sender, EventArgs e)

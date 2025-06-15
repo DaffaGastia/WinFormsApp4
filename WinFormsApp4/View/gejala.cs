@@ -95,8 +95,6 @@ namespace fitur_gejalaumum.view
                 if (berhasil)
                 { 
                     MessageBox.Show(pesan, "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    // Panggil farm11 dengan data konsultasi dan hasil obat (boleh null)
                     farm11 farm = new farm11(this.username,model, obat);
                     this.Hide();
                     farm.ShowDialog();

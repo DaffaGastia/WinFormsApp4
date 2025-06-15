@@ -53,13 +53,13 @@
             // 
             button1.BackColor = Color.Red;
             button1.Font = new Font("Comic Sans MS", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            button1.Location = new Point(641, 629);
+            button1.Location = new Point(618, 647);
             button1.Name = "button1";
-            button1.Size = new Size(182, 69);
+            button1.Size = new Size(274, 69);
             button1.TabIndex = 6;
-            button1.Text = "button1";
+            button1.Text = "Cek Keluhan";
             button1.UseVisualStyleBackColor = false;
-            button1.Click += this.button1_Click;
+            button1.Click += button1_Click;
             // 
             // label1
             // 

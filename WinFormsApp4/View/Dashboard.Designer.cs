@@ -51,16 +51,18 @@
             panel1.Controls.Add(button1);
             panel1.Controls.Add(btnHome);
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(4, 4, 4, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(235, 604);
+            panel1.Size = new Size(306, 773);
             panel1.TabIndex = 0;
             // 
             // pnlNav
             // 
             pnlNav.BackColor = Color.FromArgb(0, 124, 249);
-            pnlNav.Location = new Point(0, 206);
+            pnlNav.Location = new Point(0, 264);
+            pnlNav.Margin = new Padding(4, 4, 4, 4);
             pnlNav.Name = "pnlNav";
-            pnlNav.Size = new Size(3, 100);
+            pnlNav.Size = new Size(4, 128);
             pnlNav.TabIndex = 2;
             pnlNav.Paint += panel3_Paint;
             // 
@@ -70,8 +72,9 @@
             panel2.Controls.Add(label1);
             panel2.Controls.Add(pictureBox1);
             panel2.Location = new Point(0, 0);
+            panel2.Margin = new Padding(4, 4, 4, 4);
             panel2.Name = "panel2";
-            panel2.Size = new Size(235, 179);
+            panel2.Size = new Size(306, 229);
             panel2.TabIndex = 1;
             panel2.Paint += panel2_Paint_1;
             // 
@@ -80,9 +83,10 @@
             label1.AutoSize = true;
             label1.Font = new Font("Century Gothic", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.FromArgb(0, 124, 249);
-            label1.Location = new Point(73, 82);
+            label1.Location = new Point(95, 105);
+            label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
-            label1.Size = new Size(99, 22);
+            label1.Size = new Size(128, 28);
             label1.TabIndex = 1;
             label1.Text = "username";
             label1.Click += label1_Click;
@@ -90,9 +94,10 @@
             // pictureBox1
             // 
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(83, 29);
+            pictureBox1.Location = new Point(108, 37);
+            pictureBox1.Margin = new Padding(4, 4, 4, 4);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(69, 50);
+            pictureBox1.Size = new Size(90, 64);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.TabIndex = 1;
             pictureBox1.TabStop = false;
@@ -104,9 +109,10 @@
             button4.Font = new Font("Nirmala UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button4.ForeColor = Color.FromArgb(0, 124, 249);
             button4.Image = Properties.Resources.Logout3;
-            button4.Location = new Point(0, 546);
+            button4.Location = new Point(0, 699);
+            button4.Margin = new Padding(4, 4, 4, 4);
             button4.Name = "button4";
-            button4.Size = new Size(232, 55);
+            button4.Size = new Size(302, 70);
             button4.TabIndex = 5;
             button4.Text = "LogOut";
             button4.TextImageRelation = TextImageRelation.TextBeforeImage;
@@ -121,9 +127,10 @@
             button1.Font = new Font("Nirmala UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             button1.ForeColor = Color.FromArgb(0, 124, 249);
             button1.Image = (Image)resources.GetObject("button1.Image");
-            button1.Location = new Point(6, 251);
+            button1.Location = new Point(8, 321);
+            button1.Margin = new Padding(4, 4, 4, 4);
             button1.Name = "button1";
-            button1.Size = new Size(226, 55);
+            button1.Size = new Size(294, 70);
             button1.TabIndex = 2;
             button1.Text = "About";
             button1.TextImageRelation = TextImageRelation.TextBeforeImage;
@@ -138,9 +145,10 @@
             btnHome.Font = new Font("Nirmala UI", 10F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnHome.ForeColor = Color.FromArgb(0, 124, 249);
             btnHome.Image = Properties.Resources.Home_Page1;
-            btnHome.Location = new Point(3, 192);
+            btnHome.Location = new Point(4, 246);
+            btnHome.Margin = new Padding(4, 4, 4, 4);
             btnHome.Name = "btnHome";
-            btnHome.Size = new Size(226, 53);
+            btnHome.Size = new Size(294, 68);
             btnHome.TabIndex = 1;
             btnHome.Text = "Home";
             btnHome.TextImageRelation = TextImageRelation.TextBeforeImage;
@@ -150,14 +158,16 @@
             // 
             // Dashboard
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(13F, 32F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(46, 51, 73);
-            ClientSize = new Size(1003, 602);
+            ClientSize = new Size(1304, 771);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(4, 4, 4, 4);
             Name = "Dashboard";
             Text = "Dashboard";
+            Load += Dashboard_Load_1;
             panel1.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();

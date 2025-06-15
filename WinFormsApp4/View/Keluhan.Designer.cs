@@ -119,6 +119,7 @@
             // 
             comboBox1.Font = new Font("Comic Sans MS", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "Perut Keram", "Muntah", "Kaki Bengkak" });
             comboBox1.Location = new Point(1000, 583);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(341, 53);

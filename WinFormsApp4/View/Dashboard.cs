@@ -126,5 +126,9 @@ namespace WinFormsApp4
             button4.BackColor = Color.FromArgb(46, 51, 73);
         }
 
+        private void Dashboard_Load_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

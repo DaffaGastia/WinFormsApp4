@@ -62,7 +62,7 @@ namespace WinFormsApp4
             if (controller.AuthLogin(username, password))
             {
                 MessageBox.Show("Login berhasil", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var form2 = new Dashboard(username); // atau bisa pakai controller.LoggedInUser.Username
+                var form2 = new Dashboard(username); 
                 this.Hide();
                 form2.ShowDialog();
                 this.Close();
