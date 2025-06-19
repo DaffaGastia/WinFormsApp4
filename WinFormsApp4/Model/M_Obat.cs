@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp4.Model
 {
-    public class M_Obat   
+    public class M_Obat
     {
         public string ObatKimia { get; set; }
         public string ObatHerbal { get; set; }
         public string Lifestyle { get; set; }
-
     }
 }

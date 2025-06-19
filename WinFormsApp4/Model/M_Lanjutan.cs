@@ -10,6 +10,5 @@ namespace WinFormsApp4.Model
     {
         public int Id { get; set; }
         public string GejalaLanjutan { get; set; }
-
     }
 }

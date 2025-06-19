@@ -14,7 +14,7 @@ namespace WinFormsApp4.Controler
         public M_User GetUserByUsername(string username)
         {
             M_User user = null;
-            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=Gun180106;Database=data"))
+            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=1234;Database=data"))
             {
                 conn.Open();
                 string query = "SELECT user_id, username FROM users WHERE username = @username";
@@ -39,7 +39,7 @@ namespace WinFormsApp4.Controler
 
         public bool AuthLogin(string username, string password)
         {
-            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=Gun180106;Database=data"))
+            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=1234;Database=data"))
             {
                 conn.Open();
                 string query = "SELECT * FROM users WHERE username = @username AND password = @password";
@@ -58,7 +58,7 @@ namespace WinFormsApp4.Controler
 
         public bool UpdateUsername(int userId, string newUsername)
         {
-            using (var conn = new NpgsqlConnection("Host = localhost; Port = 5432; Username = postgres; Password = Gun180106; Database = data"))
+            using (var conn = new NpgsqlConnection("Host = localhost; Port = 5432; Username = postgres; Password = 1234; Database = data"))
             {
                 conn.Open();
                 string query = "UPDATE users SET username = @username WHERE user_id = @user_id";
@@ -75,7 +75,7 @@ namespace WinFormsApp4.Controler
 
         public bool UpdatePassword(int userId, string newPassword)
         {
-            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=Gun180106;Database=data"))
+            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=1234;Database=data"))
             {
                 conn.Open();
                 string query = "UPDATE users SET password = @password WHERE user_id = @user_id";
@@ -92,7 +92,7 @@ namespace WinFormsApp4.Controler
 
         public bool CheckPasswordValid(int userId, string oldPassword)
         {
-            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=Gun180106;Database=data"))
+            using (var conn = new NpgsqlConnection("Host=localhost;Port=5432;Username=postgres;Password=1234;Database=data"))
             {
                 conn.Open();
                 string query = "SELECT password FROM users WHERE user_id = @user_id";

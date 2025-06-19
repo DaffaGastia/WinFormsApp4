@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp4.Model
 {
-    public class M_Konsultasi 
+    public class M_Konsultasi
     {
+        public int Id { get; set; }
         public string Nama { get; set; }
         public int Umur { get; set; }
         public string Alergi { get; set; }
         public string Kategori { get; set; }
         public string Gejala { get; set; }
-
     }
 }
