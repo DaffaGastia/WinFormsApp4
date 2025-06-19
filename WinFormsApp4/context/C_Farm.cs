@@ -11,193 +11,126 @@ using Npgsql;
 
 namespace WinFormsApp4.Controler
 {
-    public class C_Farm011
+    public class C_Farm011 : IKonsultasiService<M_Lanjutan>
     {
-        private readonly string connectionString = "Host=localhost;Username=postgres;Database=data;port=5432;Password=Gun180106";
-        public M_Obat CariObat(M_Konsultasi konsultasi)
-        {
-            M_Obat hasil = null;
+        private readonly string connStr = "Host=localhost;Username=postgres;Database=data;port=5432;Password=1234";
 
+        public bool UpdateGejalaLanjutan(M_Lanjutan data)
+        {
+            if (!data.IsValid(out string pesan))
+            {
+                MessageBox.Show(pesan, "Validasi Gagal");
+                return false;
+            }
             try
             {
-                using (var conn = new NpgsqlConnection(connectionString))
-                {
-                    conn.Open();
-                    using (var cmd = new NpgsqlCommand("SELECT * FROM obat1 where @umur between umur_min and umur_max and kategori ilike @kategori and alergi ilike @alergi and gejala ilike @gejala", conn))
-                    { 
-                        cmd.Parameters.AddWithValue("@umur", konsultasi.Umur);
-                        cmd.Parameters.AddWithValue("@kategori", konsultasi.Kategori);
-                        cmd.Parameters.AddWithValue("@gejala", konsultasi.Gejala);
-                        cmd.Parameters.AddWithValue("@alergi", konsultasi.Alergi);
+                using var conn = new NpgsqlConnection(connStr);
+                conn.Open();
+                using var cmd = new NpgsqlCommand("UPDATE gejala SET gejala_lanjutan = @gejala WHERE no_antrian = @id", conn);
+                cmd.Parameters.AddWithValue("@gejala", data.GejalaLanjutan);
+                cmd.Parameters.AddWithValue("@id", data.Id);
 
-                        using (var reader = cmd.ExecuteReader())
-                        {
-                            if (reader.Read())
-                            {
-                                hasil = new M_Obat
-                                {
-                                    ObatKimia = reader["obat_kimia"].ToString(),
-                                    ObatHerbal = reader["obat_herbal"].ToString(),
-                                    Lifestyle = reader["lifestyle"].ToString()
-                                };
-                            }
-                        }
-                    }
-                }
+                int rows = cmd.ExecuteNonQuery();
+                return rows > 0;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Gagal mencari obat: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            return hasil;
-
-        }
-
-        public M_Obat ObatL(M_Lanjutan konsultasi)
-        {
-            using (var conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand("SELECT * FROM obat where @umur between umur_min and umur_max and kategori ilike @kategori and alergi ilike @alergi and gejala ilike @gejala and gejala_lanjutan ilike @gejala_lanjutan", conn))
-                {
-                    cmd.Parameters.AddWithValue("@umur", konsultasi.Umur);
-                    cmd.Parameters.AddWithValue("@kategori", konsultasi.Kategori);
-                    cmd.Parameters.AddWithValue("@alergi", konsultasi.Alergi);
-                    cmd.Parameters.AddWithValue("@gejala", konsultasi.Gejala);
-                    cmd.Parameters.AddWithValue("@Gejala_lanjutan", konsultasi.GejalaLanjutan);
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new M_Obat
-                            {
-                                ObatKimia = reader["obat_kimia"].ToString(),
-                                ObatHerbal = reader["obat_herbal"].ToString(),
-                                Lifestyle = reader["lifestyle"].ToString()
-                            };
-                        }
-                    }
-                }
-            }
-            return null;
-        }
-
-        public DataRow AmbilDataAkunTerakhir()
-        {
-            DataTable dt = new DataTable();
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM gejala ORDER BY no_antrian DESC LIMIT 1", conn))
-                {
-                    NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
-                    adapter.Fill(dt);
-                }
-            }
-            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
-        }
-    
-        public bool UpdateGejalaLanjutan(M_Lanjutan data)
-        {
-            using (var conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-                using (var cekCmd = new NpgsqlCommand("SELECT COUNT(*) FROM gejala WHERE no_antrian = @id", conn))
-                {
-                    cekCmd.Parameters.AddWithValue("id", data.Id);
-                    int count = Convert.ToInt32(cekCmd.ExecuteScalar());
-                    if (count == 0) return false;
-                }
-                using (var updateCmd = new NpgsqlCommand("UPDATE gejala SET gejala_lanjutan = @gejala WHERE no_antrian = @id", conn))
-                {
-                    updateCmd.Parameters.AddWithValue("gejala", data.GejalaLanjutan);
-                    updateCmd.Parameters.AddWithValue("id", data.Id);
-                    int result = updateCmd.ExecuteNonQuery();
-                    return result > 0;
-                }
+                MessageBox.Show("Gagal update gejala lanjutan: " + ex.Message);
+                return false;
             }
         }
-
         public DataTable AmbilDataAkunTerakhirUntukTabel()
         {
             DataTable dt = new DataTable();
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT no_antrian, nama, umur, gejala, kategori, alergi, gejala_lanjutan FROM gejala ORDER BY no_antrian DESC LIMIT 1", conn))
-                {
-                    NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd);
-                    adapter.Fill(dt);
-                }
-            }
 
-            if (dt.Rows.Count > 0)
+            try
             {
-                string gejalaLanjutan = dt.Rows[0]["gejala_lanjutan"]?.ToString();
-                if (string.IsNullOrWhiteSpace(gejalaLanjutan))
-                {
-                    dt.Columns.Remove("gejala_lanjutan");
-                }
+                using var conn = new NpgsqlConnection(connStr);
+                conn.Open();
+                string query = "SELECT * FROM gejala ORDER BY no_antrian DESC LIMIT 1";
+                using var da = new NpgsqlDataAdapter(query, conn);
+                da.Fill(dt);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal ambil data pasien terakhir: " + ex.Message);
             }
 
             return dt;
         }
-
-       
-        public DataRow AmbilDataPasienById(int id)
+        public M_Konsultasi AmbilKonsultasiById(int id)
         {
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
+            try
             {
+                using var conn = new NpgsqlConnection(connStr);
                 conn.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT * FROM gejala WHERE no_antrian = @id", conn))
+
+                using var cmd = new NpgsqlCommand("SELECT * FROM gejala WHERE no_antrian = @id", conn);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
                 {
-                    cmd.Parameters.AddWithValue("id", id);
-                    using (NpgsqlDataAdapter adapter = new NpgsqlDataAdapter(cmd))
+                    return new M_Konsultasi
                     {
-                        DataTable dt = new DataTable();
-                        adapter.Fill(dt);
-                        return dt.Rows.Count > 0 ? dt.Rows[0] : null;
-                    }
+                        Id = id,
+                        Nama = reader["nama"].ToString(),
+                        Umur = Convert.ToInt32(reader["umur"]),
+                        Gejala = reader["gejala"].ToString(),
+                        Alergi = reader["alergi"].ToString(),
+                        Kategori = reader["kategori"].ToString()
+                    };
                 }
             }
-        }
-       
-        public M_Lanjutan AmbilKonsultasiById(int id)
-        {
-            using (var conn = new NpgsqlConnection(connectionString))
+            catch (Exception ex)
             {
-                conn.Open();
-                string query = @"SELECT umur, kategori, alergi, gejala, gejala_lanjutan
-                         FROM gejala
-                         WHERE no_antrian = @id";
-
-                using (var cmd = new NpgsqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-
-                    using (var reader = cmd.ExecuteReader())
-                    {
-                        if (reader.Read())
-                        {
-                            return new M_Lanjutan
-                            {
-                                Umur = Convert.ToInt32(reader["umur"]),
-                                Kategori = reader["kategori"].ToString(),
-                                Alergi = reader["alergi"].ToString(),
-                                Gejala = reader["gejala"].ToString(),
-                                GejalaLanjutan = reader["gejala_lanjutan"].ToString()
-                            };
-                        }
-                    }
-                }
+                MessageBox.Show("Gagal ambil data: " + ex.Message);
             }
 
             return null;
         }
+
+        public M_Obat ObatL(M_Lanjutan data)
+        {
+            try
+            {
+                using var conn = new NpgsqlConnection(connStr);
+                conn.Open();
+
+                string query = @"SELECT * FROM obat 
+                         WHERE @umur BETWEEN umur_min AND umur_max 
+                         AND kategori ILIKE @kategori 
+                         AND gejala ILIKE @gejala 
+                         AND alergi ILIKE @alergi 
+                         AND gejala_lanjutan ILIKE @gejala_lanjutan
+                         LIMIT 1";
+
+                using var cmd = new NpgsqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@umur", data.Umur);
+                cmd.Parameters.AddWithValue("@kategori", $"%{data.Kategori}%");
+                cmd.Parameters.AddWithValue("@gejala", $"%{data.Gejala}%");
+                cmd.Parameters.AddWithValue("@alergi", $"%{data.Alergi}%");
+                cmd.Parameters.AddWithValue("@gejala_lanjutan", $"%{data.GejalaLanjutan}%");
+
+                using var reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    return new M_Obat
+                    {
+                        ObatKimia = reader["obat_kimia"].ToString(),
+                        ObatHerbal = reader["obat_herbal"].ToString(),
+                        Lifestyle = reader["lifestyle"].ToString()
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Gagal cari obat lanjutan: " + ex.Message);
+            }
+            return null;
+        }
     }
-    
+
 }
 
 

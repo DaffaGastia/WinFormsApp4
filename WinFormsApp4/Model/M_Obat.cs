@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace WinFormsApp4.Model
 {
-    public class M_Obat   
+    public class M_Obat
     {
         public string ObatKimia { get; set; }
         public string ObatHerbal { get; set; }
         public string Lifestyle { get; set; }
-
+        public override string ToString()
+        {
+            return $"Kimia: {ObatKimia}, Herbal: {ObatHerbal}, Lifestyle: {Lifestyle}";
+        }
     }
 }

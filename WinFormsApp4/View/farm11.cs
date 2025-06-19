@@ -39,6 +39,30 @@ namespace fitur_gejalaumum.View
 
             if (table.Rows.Count > 0)
             {
+                var kolomYangInginDihapus = new List<string>();
+                foreach (DataColumn col in table.Columns)
+                {
+                    bool semuaNull = true;
+                    foreach (DataRow row in table.Rows)
+                    {
+                        if (row[col] != DBNull.Value && !string.IsNullOrWhiteSpace(row[col].ToString()))
+                        {
+                            semuaNull = false;
+                            break;
+                        }
+                    }
+
+                    if (semuaNull)
+                    {
+                        kolomYangInginDihapus.Add(col.ColumnName);
+                    }
+                }
+
+                foreach (string colName in kolomYangInginDihapus)
+                {
+                    table.Columns.Remove(colName);
+                }
+
                 dataGridView1.DataSource = null;
                 dataGridView1.DataSource = table;
                 dataGridView1.RowHeadersVisible = false;
@@ -53,7 +77,11 @@ namespace fitur_gejalaumum.View
                 dataGridView1.Height = 100;
                 dataGridView1.DefaultCellStyle.Font = new Font("Segoe UI", 12);
                 dataGridView1.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 13, FontStyle.Bold);
-                textBox1.Text = table.Rows[0]["no_antrian"].ToString();
+
+                if (table.Columns.Contains("no_antrian"))
+                {
+                    textBox1.Text = table.Rows[0]["no_antrian"].ToString();
+                }
             }
         }
         private void TampilkanHasilObat()
@@ -80,7 +108,7 @@ namespace fitur_gejalaumum.View
             {
                 if (!int.TryParse(textBox1.Text.Trim(), out int idParsed))
                 {
-                    MessageBox.Show("ID harus berupa angka.");
+                    MessageBox.Show("ID tidak valid.");
                     return;
                 }
 
@@ -90,39 +118,47 @@ namespace fitur_gejalaumum.View
                     GejalaLanjutan = comboBox1.Text.Trim()
                 };
 
-                var lanjutanController = new C_Farm011();
-                bool simpan = lanjutanController.UpdateGejalaLanjutan(dataLanjutan);
+                bool simpan = controller.UpdateGejalaLanjutan(dataLanjutan);
 
                 if (simpan)
                 {
-                    MessageBox.Show("Gejala lanjutan berhasil disimpan.", "Sukses", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                     MessageBox.Show("Data berhasil di simpan", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     TampilkanDataPasienTerakhir();
-                    var konsultasiLanjutan = controller.AmbilKonsultasiById(idParsed);
-                    if (konsultasiLanjutan != null)
+                    var dataBaru = controller.AmbilKonsultasiById(idParsed);
+                    var dataLanjutanLengkap = new M_Lanjutan
                     {
-                        var obatSetelah = controller.ObatL(konsultasiLanjutan);
-                        if (obatSetelah != null)
-                        {
-                            label1.Text = obatSetelah.ObatKimia;
-                            label2.Text = obatSetelah.ObatHerbal;
-                            label3.Text = obatSetelah.Lifestyle;
-                        }
-                        else
-                        {
-                            label1.Text = "Tidak ditemukan";
-                            label2.Text = "-";
-                            label3.Text = "-";
-                        }
+                        Id = dataBaru.Id,
+                        Nama = dataBaru.Nama,
+                        Umur = dataBaru.Umur,
+                        Gejala = dataBaru.Gejala,
+                        Alergi = dataBaru.Alergi,
+                        Kategori = dataBaru.Kategori,
+                        GejalaLanjutan = comboBox1.Text.Trim()
+                    };
+                    var obatBaru = controller.ObatL(dataLanjutanLengkap);
+
+                    if (obatBaru != null)
+                    {
+                        label1.Text = obatBaru.ObatKimia;
+                        label2.Text = obatBaru.ObatHerbal;
+                        label3.Text = obatBaru.Lifestyle;
+                    }
+                    else
+                    {
+                        label1.Text = "Tidak ditemukan";
+                        label2.Text = "-";
+                        label3.Text = "-";
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Gagal menyimpan. ID tidak ditemukan.");
+                    MessageBox.Show("Gagal menyimpan gejala lanjutan.");
                 }
+                dataGridView1.Refresh();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Terjadi kesalahan: " + ex.Message);
+                MessageBox.Show("Kesalahan sistem: " + ex.Message);
             }
         }
 

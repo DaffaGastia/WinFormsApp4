@@ -60,14 +60,13 @@ namespace fitur_gejalaumum.view
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            try
+try
             {
-                string nama = textBox2.Text;
-                string umurText = textBox1.Text;
-                string kategori = comboBox3.Text;
-                string gejala = comboBox1.Text;
-                string alergi = comboBox2.Text;
+                string nama = textBox2.Text.Trim();
+                string umurText = textBox1.Text.Trim();
+                string kategori = comboBox3.Text.Trim();
+                string gejala = comboBox1.Text.Trim();
+                string alergi = comboBox2.Text.Trim();
 
                 if (string.IsNullOrWhiteSpace(nama) ||
                     string.IsNullOrWhiteSpace(umurText) ||
@@ -79,35 +78,47 @@ namespace fitur_gejalaumum.view
                     return;
                 }
 
-                if (!int.TryParse(umurText, out int umur))
+                if (!int.TryParse(umurText, out int umur) || umur <= 0)
                 {
-                    MessageBox.Show("Umur harus berupa angka!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Umur harus berupa angka dan lebih dari 0!", "Validasi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                var controller = new C_Konsultasi();
                 string pesan;
-                M_Konsultasi model;
-                M_Obat obat;
+                var controller = new C_Konsultasi();
+                M_Konsultasi modelKonsultasi = new M_Konsultasi
+                {
+                    Nama = nama,
+                    Umur = int.Parse(umurText),
+                    Kategori = kategori,
+                    Gejala = gejala,
+                    Alergi = alergi
+                };
 
-                bool berhasil = controller.ProsesKonsultasi(nama, umurText, alergi, kategori, gejala, out pesan, out model, out obat);
+                M_Obat modelObat;
+                int idPasien;
 
-                if (berhasil)
-                { 
-                    MessageBox.Show(pesan, "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    farm11 farm = new farm11(this.username,model, obat);
+                bool hasilSimpan = controller.SimpanData(modelKonsultasi, out idPasien);
+
+                if (hasilSimpan)
+                {
+                    MessageBox.Show("Data berhasil di simpan", "Berhasil", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    modelKonsultasi.Id = idPasien;
+                    modelObat = controller.CariObat(modelKonsultasi);
+
+                    var formHasil = new farm11(this.username, modelKonsultasi, modelObat);
                     this.Hide();
-                    farm.ShowDialog();
+                    formHasil.ShowDialog();
                     this.Close();
                 }
                 else
                 {
-                    MessageBox.Show(pesan, "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Gagal memproses data: ", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Terjadi kesalahan: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Terjadi kesalahan:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void textBox3_TextChanged(object sender, EventArgs e)
