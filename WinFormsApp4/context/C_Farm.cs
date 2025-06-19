@@ -17,11 +17,17 @@ namespace WinFormsApp4.Controler
 
         public bool UpdateGejalaLanjutan(M_Lanjutan data)
         {
-            if (!data.IsValid(out string pesan))
+            if (data.Id <= 0)
             {
-                MessageBox.Show(pesan, "Validasi Gagal");
+                MessageBox.Show("ID tidak valid.", "Validasi Gagal");
                 return false;
             }
+            if (string.IsNullOrWhiteSpace(data.GejalaLanjutan))
+            {
+                MessageBox.Show("Gejala lanjutan tidak boleh kosong.", "Validasi Gagal");
+                return false;
+            }
+           
             try
             {
                 using var conn = new NpgsqlConnection(connStr);

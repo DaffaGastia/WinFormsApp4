@@ -11,9 +11,5 @@ namespace WinFormsApp4.Model
         public string ObatKimia { get; set; }
         public string ObatHerbal { get; set; }
         public string Lifestyle { get; set; }
-        public override string ToString()
-        {
-            return $"Kimia: {ObatKimia}, Herbal: {ObatHerbal}, Lifestyle: {Lifestyle}";
-        }
     }
 }

@@ -21,11 +21,37 @@ namespace WinFormsApp4.Controler
             konsultasi = null;
             obat = null;
 
-            if (!int.TryParse(umurText, out int umur))
+            if (string.IsNullOrWhiteSpace(nama))
             {
-                pesan = "Umur tidak valid.";
+                pesan = "Nama tidak boleh kosong.";
                 return false;
             }
+
+            if (!int.TryParse(umurText, out int umur) || umur <= 0)
+            {
+                pesan = "Umur tidak valid atau kurang dari 1.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(alergi))
+            {
+                pesan = "Alergi tidak boleh kosong.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(kategori))
+            {
+                pesan = "Kategori tidak boleh kosong.";
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(gejala))
+            {
+                pesan = "Gejala tidak boleh kosong.";
+                return false;
+            }
+
+            // Buat objek konsultasi
             var data = new M_Konsultasi
             {
                 Nama = nama,
@@ -34,9 +60,6 @@ namespace WinFormsApp4.Controler
                 Alergi = alergi,
                 Kategori = kategori
             };
-
-            if (!data.IsValid(out pesan))
-                return false;
 
             try
             {
@@ -72,11 +95,32 @@ namespace WinFormsApp4.Controler
         public bool SimpanData(M_Konsultasi data, out int id)
         {
             id = 0;
-            if (!data.IsValid(out string pesan))
+            if (string.IsNullOrWhiteSpace(data.Nama))
             {
-                MessageBox.Show(pesan, "Validasi Gagal");
+                MessageBox.Show("Nama tidak boleh kosong.", "Validasi Gagal");
                 return false;
             }
+            if (data.Umur <= 0)
+            {
+                MessageBox.Show("Umur tidak valid.", "Validasi Gagal");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(data.Gejala))
+            {
+                MessageBox.Show("Gejala tidak boleh kosong.", "Validasi Gagal");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(data.Alergi))
+            {
+                MessageBox.Show("Alergi tidak boleh kosong.", "Validasi Gagal");
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(data.Kategori))
+            {
+                MessageBox.Show("Kategori tidak boleh kosong.", "Validasi Gagal");
+                return false;
+            }
+
 
             try
             {

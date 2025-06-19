@@ -10,23 +10,5 @@ namespace WinFormsApp4.Model
     {
         public int Id { get; set; }
         public string GejalaLanjutan { get; set; }
-
-        public bool IsValid(out string pesan)
-        {
-            if (Id <= 0)
-            {
-                pesan = "ID tidak valid.";
-                return false;
-            }
-
-            if (string.IsNullOrWhiteSpace(GejalaLanjutan))
-            {
-                pesan = "Gejala lanjutan tidak boleh kosong.";
-                return false;
-            }
-
-            pesan = "";
-            return true;
-        }
     }
 }
